@@ -1,0 +1,29 @@
+<app-header [showButton]="false"></app-header>
+<div class="main-div">
+    <div class="head-title">
+        <h1 class="main-title">Excellent!</h1>
+        <h1>See you in November 2023!</h1>
+    </div>
+    <div class="summary">
+        <h3>Submission Summary</h3>
+        <div *ngIf="!formData">
+            <h1>No data! Have you submitted a form yet?</h1>
+        </div>
+        <div *ngIf="formData" class="summary-list">
+            <ul>
+                <li><strong>First Name:</strong> {{ formData.firstName }}</li>
+                <li><strong>Last Name:</strong> {{ formData.lastName }}</li>
+                <li><strong>Phone Number:</strong> {{ formData.phoneNumber }}</li>
+                <li><strong>Email:</strong> {{formData.email}}</li>
+                <li *ngIf="formData.addressLine2">
+                    <strong>Address:</strong>{{formData.addressLine1}},{{formData.addressLine2}}</li>
+                <li *ngIf="!formData.addressLine2"><strong>Address:</strong>{{formData.addressLine1}}</li>
+                <li><strong>Country:</strong>{{formData.country}}</li>
+                <li><strong>State:</strong>{{formData.state || 'none'}}</li>
+                <li><strong>City:</strong>{{formData.city}}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

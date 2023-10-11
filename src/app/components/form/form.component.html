@@ -1,0 +1,72 @@
+<app-header [showButton]="false"></app-header>
+<div class="main-div">
+    <h1 class="title">Application Form</h1>
+    <form class="form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <h3>Contact Information</h3>
+        <div class="field1" [ngClass]="{'error': isFieldInvalid('firstName')}">
+            <label for="firstName">First Name<span class="required">*</span></label>
+            <input placeholder="First Name" type="text" id="firstName" formControlName="firstName">
+            <div *ngIf="isFieldInvalid('firstName')" class="error">First Name is required</div>
+        </div>
+        <div class="field2" [ngClass]="{'error': isFieldInvalid('lastName')}">
+            <label for="lastName">Last Name<span class="required">*</span></label>
+            <input placeholder="Last Name" type="text" id="lastName" class="input" formControlName="lastName">
+            <div *ngIf="isFieldInvalid('lastName')" class="error">Last Name is required</div>
+        </div>
+        <div class="field3" [ngClass]="{'error': isFieldInvalid('phoneNumber')}">
+            <label for="phoneNumber">Phone Number<span class="required">*</span></label>
+            <input placeholder="+407xx xxx xxx" type="text" id="phoneNumber" class="input"
+                formControlName="phoneNumber">
+            <div *ngIf="isFieldInvalid('phoneNumber')" class="error">
+                <span *ngIf="registerForm.get('phoneNumber')?.hasError('required')">Phone Number is required</span>
+                <span *ngIf="registerForm.get('phoneNumber')?.hasError('pattern')">Invalid Phone Number
+                    format (e.g., +407xxxxxxxx)</span>
+            </div>
+        </div>
+        <div class="field4" [ngClass]="{'error': isFieldInvalid('email')}">
+            <label for="email">Email Address<span class="required">*</span></label>
+            <input placeholder="john@doe.com" type="text" id="email" class="input" formControlName="email">
+            <div *ngIf="isFieldInvalid('email')" class="error">Email Address is required</div>
+            <span class="error-mail" *ngIf="registerForm.get('email')?.hasError('email')">Invalid email format (e.g.,
+                jondoe@jon.doe)</span>
+        </div>
+        <h3 class="address">Address</h3>
+        <div class="field5" [ngClass]="{'error': isFieldInvalid('addressLine1')}">
+            <label for="addressLine1">Address Line 1<span class="required">*</span></label>
+            <input placeholder="Street name & number" type="text" id="addressLine1" class="input"
+                formControlName="addressLine1">
+            <div *ngIf="isFieldInvalid('addressLine1')" class="error">Address Line 1 is required</div>
+        </div>
+        <div class="field6" [ngClass]="{'error': isFieldInvalid('addressLine2')}">
+            <label for="addressLine2">Address Line 2</label>
+            <input placeholder="Suite,apartment" type="text" id="addressLine2" class="input"
+                formControlName="addressLine2">
+        </div>
+        <div class="field7" [ngClass]="{'error': isFieldInvalid('country')}">
+            <label for="country">Country<span class="required">*</span></label>
+            <select formControlName="country" id="country" class="input" [(ngModel)]="selectedCountry"
+                (change)="onCountryChange()">
+                <option class="option" value="">Select a country</option>
+                <option *ngFor="let country of countries" [value]="country.iso3">{{ country.country }}</option>
+            </select>
+            <div *ngIf="isFieldInvalid('country')" class="error">Country is required</div>
+        </div>
+        <div class="field8" [ngClass]="{'error': isFieldInvalid('state')}">
+            <label for="state">State</label>
+            <select id="state" class="input" formControlName="state">
+                <option value="">Select a state</option>
+                <option value="" disabled selected>No options</option>
+            </select>
+        </div>
+        <div class="field9" [ngClass]="{'error': isFieldInvalid('city')}">
+            <label for="city">City<span class="required">*</span></label>
+            <select formControlName="city" id="city" class="input" [(ngModel)]="selectedCity">
+                <option value="">Select a city</option>
+                <option *ngFor="let city of cities">{{ city }}</option>
+            </select>
+            <div *ngIf="isFieldInvalid('city')" class="error">City is required</div>
+        </div>
+        <button [disabled]="registerForm.invalid">Join Us</button>
+    </form>
+</div>
+<app-footer></app-footer>

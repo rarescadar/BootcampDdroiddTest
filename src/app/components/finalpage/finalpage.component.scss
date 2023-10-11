@@ -1,0 +1,32 @@
+.main-div {
+    width: 71%;
+    background-color: #F4F5F8;
+    margin-left: 30vh;
+    min-height: calc(91vh - 80px);
+    display: flex;
+    flex-direction: column;
+    color: #003C55;
+    font-weight: 600;
+    justify-content: center;
+    align-items: center;
+
+    .summary {
+        display: flex;
+        flex-direction: column;
+        color: black;
+
+        h3 {
+            align-self: center;
+        }
+    }
+
+    .head-title {
+        font-size: x-large;
+        font-weight: bolder;
+
+        .main-title {
+            position: relative;
+            left: 200px;
+        }
+    }
+}
