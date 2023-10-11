@@ -4,9 +4,9 @@
     gap: 200px;
     justify-content: center;
     align-items: center;
-    width: 71%;
+    width: 80%;
     background-color: #F4F5F8;
-    margin-left: 30vh;
+    margin-left: 20vh;
     min-height: calc(91vh - 80px);
 
 
@@ -18,12 +18,18 @@
         background-color: #FCD400;
         font-weight: 6 00;
         margin-right: 20px;
+        margin-bottom: 20px;
         cursor: pointer;
     }
 
     .destructure-image {
+        width: 55%;
+    }
+
+    .web-image {
+        width: 45%;
         position: relative;
-        bottom: 100px;
+        top: 100px;
     }
 
 
