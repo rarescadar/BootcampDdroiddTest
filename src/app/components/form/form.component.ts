@@ -11,22 +11,25 @@ import { PopulationService } from 'src/app/services/population.service';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent {
-  phoneNumberPattern = /^(\+407\d{8})$/;
   countries: CountriesWithCities[] = [];
   cities: string[] = [];
   selectedCountry: string = '';
   selectedCity: string = '';
-  private destroy$: Subject<void> = new Subject<void>();
   registerForm!: FormGroup;
+  errorMessages: any = [];
+  private noNumbersPattern = /^[A-Za-z\s]+$/; // Allow letters (including spaces)
+  private destroy$: Subject<void> = new Subject<void>();
+  private phoneNumberPattern = /^(\+407\d{8})$/;
+  private emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   constructor(private fb: FormBuilder, private populationService: PopulationService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstName: ['', [Validators.required, Validators.pattern(this.noNumbersPattern)]],
+      lastName: ['', [Validators.required, Validators.pattern(this.noNumbersPattern)]],
       phoneNumber: ['', [Validators.required, Validators.pattern(this.phoneNumberPattern)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
       addressLine1: ['', Validators.required],
       addressLine2: '',
       country: ['', Validators.required],
@@ -51,14 +54,31 @@ export class FormComponent {
       const formData = this.registerForm.value;
       this.router.navigate(['thank-you'], { queryParams: { data: JSON.stringify(formData) } });
     } else {
-      alert('Form cannot be submitted. Fix all the errors and try again.')
+      // Create an array to store error messages
+      const errorMessages: any = [];
+      // Check each form control for errors and add error messages to the array
+      Object.keys(this.registerForm.controls).forEach((key) => {
+        const control: any = this.registerForm.get(key);
+        if (control.invalid) {
+          Object.keys(control.errors).forEach((errorKey) => {
+            if (errorKey === 'required') {
+              errorMessages.push(`${key.charAt(0).toUpperCase() + key.slice(1)} is required.`);
+            } else if (errorKey === 'pattern') {
+              if (key == "phoneNumber") {
+                errorMessages.push(`Wrong phone number format (e.g +40723933319).`);
+              }
+              if (key == "email") {
+                errorMessages.push(`Wrong email format (e.g john@doe.com).`);
+              }
+              if (key == "firstName" || key == "lastName") {
+                errorMessages.push(`You cannot add numbers in your name.Try using only letters.`)
+              }
+            }
+          });
+        }
+      });
+      this.errorMessages = errorMessages;
     }
   }
-
-  isFieldInvalid(field: string): boolean | undefined {
-    const control = this.registerForm.get(field);
-    return control?.touched && (control?.hasError('required') || control?.hasError('pattern'));
-  }
-
 
 }
