@@ -54,9 +54,7 @@ export class FormComponent {
       const formData = this.registerForm.value;
       this.router.navigate(['thank-you'], { queryParams: { data: JSON.stringify(formData) } });
     } else {
-      // Create an array to store error messages
       const errorMessages: any = [];
-      // Check each form control for errors and add error messages to the array
       Object.keys(this.registerForm.controls).forEach((key) => {
         const control: any = this.registerForm.get(key);
         if (control.invalid) {
