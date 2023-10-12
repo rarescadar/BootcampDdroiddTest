@@ -3,35 +3,35 @@
     <h1 class="title">Application Form</h1>
     <form class="form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <h3>Contact Information</h3>
-        <div class="field1">
+        <div class="field1" [ngClass]="{'error': formSubmitted &&  isFieldInvalid('firstName')}">
             <label for="firstName">First Name<span class="required">*</span></label>
             <input placeholder="First Name" type="text" id="firstName" formControlName="firstName">
         </div>
-        <div class="field2">
+        <div class="field2" [ngClass]="{'error': formSubmitted &&  isFieldInvalid('lastName')}">
             <label for="lastName">Last Name<span class="required">*</span></label>
             <input placeholder="Last Name" type="text" id="lastName" class="input" formControlName="lastName">
         </div>
-        <div class="field3">
+        <div class="field3" [ngClass]="{'error': formSubmitted &&  isFieldInvalid('phoneNumber')}">
             <label for="phoneNumber">Phone Number<span class="required">*</span></label>
             <input placeholder="+407xx xxx xxx" type="text" id="phoneNumber" class="input"
                 formControlName="phoneNumber">
         </div>
-        <div class="field4">
+        <div class="field4" [ngClass]="{'error': formSubmitted &&  isFieldInvalid('email')}">
             <label for="email">Email Address<span class="required">*</span></label>
             <input placeholder="john@doe.com" type="text" id="email" class="input" formControlName="email">
         </div>
         <h3 class="address">Address</h3>
-        <div class="field5">
+        <div class="field5" [ngClass]="{'error': formSubmitted &&  isFieldInvalid('addressLine1')}">
             <label for="addressLine1">Address Line 1<span class="required">*</span></label>
             <input placeholder="Street name & number" type="text" id="addressLine1" class="input"
                 formControlName="addressLine1">
         </div>
-        <div class="field6">
+        <div class="field6" [ngClass]="{'error': formSubmitted &&  isFieldInvalid('addressLine2')}">
             <label for="addressLine2">Address Line 2</label>
             <input placeholder="Suite,apartment" type="text" id="addressLine2" class="input"
                 formControlName="addressLine2">
         </div>
-        <div class="field7">
+        <div class="field7" [ngClass]="{'error': formSubmitted &&  isFieldInvalid('country')}">
             <label for="country">Country<span class="required">*</span></label>
             <select formControlName="country" id="country" class="input" [(ngModel)]="selectedCountry"
                 (change)="onCountryChange()">
@@ -39,14 +39,14 @@
                 <option *ngFor="let country of countries" [value]="country.iso3">{{ country.country }}</option>
             </select>
         </div>
-        <div class="field8">
+        <div class="field8" [ngClass]="{'error': formSubmitted &&  isFieldInvalid('state')}">
             <label for="state">State</label>
             <select id="state" class="input" formControlName="state">
                 <option value="">Select a state</option>
                 <option value="" disabled selected>No options</option>
             </select>
         </div>
-        <div class="field9">
+        <div class="field9" [ngClass]="{'error': formSubmitted &&  isFieldInvalid('city')}">
             <label for="city">City<span class="required">*</span></label>
             <select formControlName="city" id="city" class="input" [(ngModel)]="selectedCity">
                 <option value="">Select a city</option>

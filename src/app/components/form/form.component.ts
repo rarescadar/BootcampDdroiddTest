@@ -17,6 +17,7 @@ export class FormComponent {
   selectedCity: string = '';
   registerForm!: FormGroup;
   errorMessages: any = [];
+  formSubmitted = false;
   private noNumbersPattern = /^[A-Za-z\s]+$/; // Allow letters (including spaces)
   private destroy$: Subject<void> = new Subject<void>();
   private phoneNumberPattern = /^(\+407\d{8})$/;
@@ -50,6 +51,7 @@ export class FormComponent {
   }
 
   onSubmit(): void {
+    this.formSubmitted = true;
     if (this.registerForm.valid) {
       const formData = this.registerForm.value;
       this.router.navigate(['thank-you'], { queryParams: { data: JSON.stringify(formData) } });
@@ -77,6 +79,11 @@ export class FormComponent {
       });
       this.errorMessages = errorMessages;
     }
+  }
+
+  isFieldInvalid(field: string): boolean | undefined {
+    const control = this.registerForm.get(field);
+    return control?.hasError('required') || control?.hasError('pattern');
   }
 
 }
